@@ -8,15 +8,28 @@ project_df = rawdata
 print(project_df)
 
 # Q5
+# Checking columns' datatype (w/o cleansing)
+print(project_df.dtypes)
+
 # Cleaning the columns by removing whitespaces and renaming the first column to "Date"
 project_df.columns = project_df.columns.str.strip()
 project_df = project_df.rename(columns={'' : 'Date'})
+
+# Convert Year-Month dates into actual datetime
+project_df['Date'] = pd.to_datetime(project_df['Date'])
 print(project_df)
 
-# Convert Year-Month dates to an actual datetime
-project_df['Date'] = pd.to_datetime(project_df['Date'])
+# Finding missing values
 
-print(project_df.columns)
+
+# Replacing missing values
+
+
+# Checking column names (with cleansing)
+
+
+# Dataframe (cleansed)
+
 class RegionPeriod :
     def __init__(self, region, period):
         self.region = region
@@ -48,23 +61,17 @@ class RegionPeriod :
         else:
             print("End")
 
-# asks for input of region and period of time wanted
-
-
-
-
-
 # Q6
-#Finding the specified data for computation
-def mean(project_df):
-    mean = sum(project_df)/len(project_df)
-    return mean
+RegionPeriod("asia", "2").Region()
+final_df = time_period
+print(final_df)
 
-#Split into different column
-Country: ["Brunei Darussalam", "Indonesia", "Malaysia", "Philippines", "Thailand", "VietNam", "Myanmar", "Japan",
-            "Hong Kong", "China", "Taiwan", "Korea, Republic Of", "India", "Pakistan", "Sri Lanka", "Saudi Arabia",
-            "Kuwait", "UAE", "United Kingdom", "Germany", "France", "Italy", "Netherlands", "Greece", "Belgium & Luxembourg",
-            "Switzerland", "Austria", "Scandinavia", "CIS & Eastern Europe", "USA", "Canada", "Australia", "New Zealand",
-            "Africa"]
-project_df =['Date'].str.split(separator, maxsplit)
-print(project_df)
+# Q7
+plt.bar(final_df['Region'], final_df['Date'])
+plt.show();
+
+project_df = country[['country_model', 'Date']].plot(kind='bar', title = "Top 3 country", figsize=(10,10), legend=True, fontsize=12)
+plt.show();
+
+project_df = country['Date'].plot(kind='hist', title ="Range in Date", figsize=(10,10), legend=True, fontsize=12)
+plt.show();
