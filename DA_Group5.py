@@ -4,31 +4,32 @@ import pandas as pd, numpy as np, matplotlib.pyplot as plt, openpyxl
 # Q4 import excel file into a dataframe
 rawdata = pd.read_excel('Project_File.xlsx')
 
-project_df = rawdata
-print(project_df)
+unclean_df = rawdata
+print(unclean_df)
 
 # Q5
-# Checking columns' datatype (w/o cleansing)
-print(project_df.dtypes)
+# Checking columns' datatype
+print(unclean_df.dtypes)
 
 # Cleaning the columns by removing whitespaces and renaming the first column to "Date"
-project_df.columns = project_df.columns.str.strip()
-project_df = project_df.rename(columns={'' : 'Date'})
+unclean_df.columns = unclean_df.columns.str.strip()
+unclean_df = unclean_df.rename(columns={'' : 'Date'})
 
 # Convert Year-Month dates into actual datetime
-project_df['Date'] = pd.to_datetime(project_df['Date'])
-print(project_df)
-
-# Finding missing values
-
+unclean_df['Date'] = pd.to_datetime(unclean_df['Date'])
+print(unclean_df)
 
 # Replacing missing values
+na_df = unclean_df.replace('na', '0', regex= True)
+print(na_df)
 
-
-# Checking column names (with cleansing)
-
+# Checking column names in na_df before moving it into
+# a new storage 'project_df'
+print(na_df.dtypes)
+project_df = na_df
 
 # Dataframe (cleansed)
+print(project_df)
 
 class RegionPeriod :
     def __init__(self, region, period):
@@ -67,7 +68,7 @@ final_df = time_period
 print(final_df)
 
 # Q7
-plt.bar(final_df['Region'], final_df['Date'])
+plt.bar(country['Region'], country['Date'])
 plt.show();
 
 project_df = country[['country_model', 'Date']].plot(kind='bar', title = "Top 3 country", figsize=(10,10), legend=True, fontsize=12)
