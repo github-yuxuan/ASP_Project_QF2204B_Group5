@@ -1,5 +1,5 @@
 # Q3 import the necessary libraries needed
-import pandas as pd, numpy as np, matplotlib.pyplot as plt, openpyxl
+import pandas as pd, matplotlib.pyplot as plt
 
 # Q4 import excel file into a dataframe
 rawdata = pd.read_excel('Project_File.xlsx')
@@ -40,13 +40,13 @@ class RegionPeriod :
     def Region(self):
         global region_df, time_period
         if self.region == "europe":
-            region_df = project_df[["Date", "United Kingdom", "France", "Germany", "Italy", "Netherlands", "Greece", "Belgium & Luxembourg", "Switzerland",
-                            "Austria", "Scandinavia", "CIS & Eastern Europe"]]
+            region_df = project_df[['Date'] & project_df.iloc[ :, 20:30]]
         elif self.region == "asia":
-            region_df = project_df[['Date', 'Brunei Darussalam', 'Indonesia', 'Malaysia', 'Philippines','Thailand', 'Viet Nam', 'Myanmar', 'Japan', 'Hong Kong', 'China',
-                            'Taiwan', 'Korea, Republic Of', 'India', 'Pakistan', 'Sri Lanka', 'Saudi Arabia', 'Kuwait', 'UAE']]
+            region_df = project_df[['Date', 'Brunei Darussalam', 'Indonesia', 'Malaysia', 'Philippines', 'Thailand',
+                                    'Viet Nam', 'Myanmar', 'Japan', 'Hong Kong', 'China', 'Taiwan',
+                                    'Korea, Republic Of', 'India', 'Pakistan', 'Sri Lanka', 'Saudi Arabia', 'Kuwait', 'UAE']]
         elif self.region == "others":
-            region_df = project_df[['Date', 'USA', 'Canada','Australia', 'New Zealand', 'Africa']]
+            region_df = project_df[['Date', 'United Kingdom'] & project_df.iloc[ :, 31:35]]
         else:
             print('End')
 
@@ -62,17 +62,35 @@ class RegionPeriod :
         else:
             print("End")
 
-# Q6
-RegionPeriod("asia", "2").Region()
+RegionPeriod("asia", "4").Region()
 final_df = time_period
 print(final_df)
 
-# Q7
-plt.bar(country['Region'], country['Date'])
-plt.show();
+# Q6 to 7
+#finding the total sum of visitors throughout the 10 years from 1998 to 2007
+# and sort by descending order
+total_visitor_series = final_df.sum().sort_values(ascending=False)
+print(total_visitor_series)
 
-project_df = country[['country_model', 'Date']].plot(kind='bar', title = "Top 3 country", figsize=(10,10), legend=True, fontsize=12)
-plt.show();
+total_visitor_df = pd.DataFrame({"Country" : total_visitor_series.index,
+                                "Total Visitor" : total_visitor_series.values})
+print(total_visitor_df)
 
-project_df = country['Date'].plot(kind='hist', title ="Range in Date", figsize=(10,10), legend=True, fontsize=12)
-plt.show();
+total_top3_country = total_visitor_df[:3]
+print(total_top3_country)
+
+#plotting bar chart
+ax = total_top3_country.plot.bar(x ='Country', y ='Total Visitor', rot =0)
+plt.title("The top 3 countries in Asia throughout 10 years of 1998 to 2007")
+plt.xlabel('Country', fontsize=10)
+plt.ylabel('Total Visitor', fontsize=10)
+
+#Adjusting the rotation of x value labels and tightens the plot into a smaller size
+#to show the xlabels and ylabels
+plt.xticks(rotation = 25)
+plt.ticklabel_format(axis="y", style='plain')
+ax.bar_label(ax.containers[0], label_type='edge', fmt = '%d')
+plt.tight_layout()
+
+#displaying the top 3 countries in the bar chart
+plt.show()
