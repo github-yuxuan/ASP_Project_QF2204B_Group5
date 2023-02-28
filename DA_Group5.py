@@ -62,7 +62,7 @@ class RegionPeriod :
         else:
             print("End")
 
-RegionPeriod("asia", "4").Region()
+RegionPeriod("asia", "3").Region()
 final_df = time_period
 print(final_df)
 
